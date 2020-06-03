@@ -53,8 +53,8 @@ def collectSubData(subm, limit):
 
 sub='askreddit'
 #before and after dates
-before = "1590971471" #October 1st
-after = "1590364800"  #January 1st
+before = "1590971471"  # October 1st
+after = "1590364800" #January 1st
 query = "Screenshot"
 subCount = 0
 subStats = {}
@@ -86,7 +86,7 @@ def updateSubs_file():
     upload_count = 0
     location = "downloaded/"
     print("input filename of submission file, please add .csv")
-    filename = input()
+    filename = input() + ".csv"
     file = location + filename
     with open(file, 'w', newline='', encoding='utf-8') as file:
         a = csv.writer(file, delimiter=',')
