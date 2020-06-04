@@ -1,4 +1,3 @@
-import pandas as pd
 import requests
 import json
 import csv
@@ -6,7 +5,7 @@ import time
 import datetime
 import praw
 from prawcore import NotFound
-
+import datetime
 
 
 
@@ -36,7 +35,6 @@ def getPushshiftData(query, after, before, sub):
 def getCommentData(id, limit):
     url = 'https://api.pushshift.io/reddit/comment/search/?link_id=' + str(id) + '&limit=' + str(limit)
     r = requests.get(url)
-    print(url)
     data = json.loads(r.text)['data']
     collected = []
     for comment in data:
@@ -118,7 +116,7 @@ while temp == False:
     if cc.isnumeric():
         temp = True
 
-print(t)
+print("commencing download from " + t + " in between " + time.ctime(start) + " and " + time.ctime(end))
 sub= t
 #before and after dates
 
