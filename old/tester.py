@@ -50,20 +50,12 @@ def getCommentData(id, limit):
 def collectSubData(subm, limit):
     subData = list()  # list to store data points
     title = subm['title']
-    url = subm['url']
-    try:
-        flair = subm['link_flair_text']
-    except KeyError:
-        flair = "NaN"
-    author = subm['author']
     sub_id = subm['id']
-    score = subm['score']
-    created = datetime.datetime.fromtimestamp(subm['created_utc'])  # 1520561700.0
-    numComms = subm['num_comments']
-    permalink = subm['permalink']
-    comments = getCommentData(sub_id, limit)
-    subData.append((sub_id, title, url, author, score, created, numComms, permalink, flair, comments))
+
+
+    subData.append((title))
     subStats[sub_id] = subData
+
 
 if reddit.read_only:
     print("reddit has loaded, welcome to reddit-downloader")
@@ -138,7 +130,6 @@ while len(data) > 0:
     for submission in data:
         collectSubData(submission, 10)
         subCount += 1
-        print(subCount)
     # Calls getPushshiftData() with the created date of the last submission
     print(len(data))
     print(str(datetime.datetime.fromtimestamp(data[-1]['created_utc'])))
@@ -155,22 +146,3 @@ print(list(subStats.values())[-1][0][1] + " created: " + str(list(subStats.value
 
 
 
-def updateSubs_file():
-    upload_count = 0
-    location = "downloaded/"
-    print("input filename of submission file")
-    filename = input() + ".csv"
-    file = location + filename
-    with open(file, 'w', newline='', encoding='utf-8') as file:
-        a = csv.writer(file, delimiter=',')
-        headers = ["Post ID", "Title", "Url", "Author", "Score", "Publish Date", "Total No. of Comments", "Permalink",
-                   "Flair", "Comments"]
-        a.writerow(headers)
-        for sub in subStats:
-            a.writerow(subStats[sub][0])
-            upload_count += 1
-
-        print(str(upload_count) + " submissions have been uploaded")
-
-
-updateSubs_file()
