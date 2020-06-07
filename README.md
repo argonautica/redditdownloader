@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ###Installation
 
-Git clone this repository, then `cd` into the directory to run
+Git clone this repository, then `cd` into the directory to run. 
 ```shell script
 git clone https://github.com/argonautica/redditdownloader.git && cd redditdownloader
 ```
@@ -22,3 +22,6 @@ Run it using:
 ```shell script
 python3 redditdownloader.py
 ```
+You will be prompted to enter the the name of the subreddit you wish to download from, the start and ending dates that you would like to download from in [Unix Timestamp](https://www.unixtimestamp.com/index.php) format. 
+
+After the download is complete, you will be prompted to enter the name of the file, and it will be saved in *.csv* format in the `/downloaded` folder. 
