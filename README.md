@@ -1,6 +1,8 @@
 # RedditDownloader
 A simple CLI tool to download reddit text posts and comments. 
 
+I wanted to do some data analysis on some subreddits that I frequent, and found that Reddit had set a 1000 post cap on posts you could download. I found out that [PushShift](https://pushshift.io/) could be used to bypass this, so I wrote a simple application that can be used to download as many posts as you want from a subreddit, in a given time frame. 
+
 ### Prerequisites
 For this to work, you will need to have [Python 3+](https://www.python.org/download/releases/3.0/), [PRAW](https://pypi.org/project/praw/) (The Python Reddit API Wrapper) and [prawcore](https://pypi.org/project/prawcore/) (a communication layer used by PRAW) downloaded.These can be downloaded individually using [PIP](https://pypi.org/).
 
