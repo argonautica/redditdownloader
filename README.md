@@ -10,13 +10,13 @@ pip install -r requirements.txt
 ```  
 
 
-###Installation
+### Installation
 
 Git clone this repository, then `cd` into the directory to run. 
 ```shell script
 git clone https://github.com/argonautica/redditdownloader.git && cd redditdownloader
 ```
-###Usage
+### Usage
 As of now, the only way to use RedditDownloader is by running [redditdownloader.py](https://github.com/argonautica/redditdownloader/blob/master/redditdownloader.py).
 Run it using: 
 ```shell script
