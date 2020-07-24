@@ -2,7 +2,6 @@ import requests
 import json
 import csv
 import time
-import datetime
 import praw
 from prawcore import NotFound
 import datetime
@@ -135,7 +134,7 @@ try:
     # from the 'after' date up until before date
     while len(data) > 0:
         for submission in data:
-            collectSubData(submission, 10)
+            collectSubData(submission, cc)
             subCount += 1
             print("Post Number " + str(subCount) + " has been downloaded.")
         # Calls getPushshiftData() with the created date of the last submission
