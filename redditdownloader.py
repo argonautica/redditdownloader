@@ -60,7 +60,7 @@ def collectSubData(subm, limit):
     numComms = subm['num_comments']
     permalink = subm['permalink']
     comments = getCommentData(sub_id, limit)
-    subData.append((sub_id, title, url, author, score, created, numComms, permalink, flair, comments))
+    subData.append((sub_id, title, created, url, author, score, numComms, permalink, flair, comments))
     subStats[sub_id] = subData
 
 if reddit.read_only:
@@ -150,9 +150,9 @@ except:
 
 print(str(len(subStats)) + " submissions have added to list")
 print("1st entry is:")
-print(list(subStats.values())[0][0][1] + " created: " + str(list(subStats.values())[0][0][5]))
+print(list(subStats.values())[0][0][1] + " created: " + str(list(subStats.values())[0][0][2]))
 print("Last entry is:")
-print(list(subStats.values())[-1][0][1] + " created: " + str(list(subStats.values())[-1][0][5]))
+print(list(subStats.values())[-1][0][1] + " created: " + str(list(subStats.values())[-1][0][2]))
 
 
 
