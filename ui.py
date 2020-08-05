@@ -36,8 +36,41 @@ def sub_exists(sub):
     return exists
 
 
+#downloader functions
+
+def getPushshiftData(query, after, before, sub):
+    url = 'https://api.pushshift.io/reddit/search/submission/?title='+str(query)+'&size=1000&after='+str(after)+'&before='+str(before)+'&subreddit='+str(sub)
+    r = requests.get(url)
+    data = json.loads(r.text)
+    return data['data']
+
+def collectSubData(subm, limit):
+    subData = list()  # list to store data points
+    title = subm['title']
+    url = subm['url']
+    try:
+        flair = subm['link_flair_text']
+    except KeyError:
+        flair = "NaN"
+    author = subm['author']
+    sub_id = subm['id']
+    score = subm['score']
+    created = datetime.datetime.fromtimestamp(subm['created_utc'])  # 1520561700.0
+    numComms = subm['num_comments']
+    permalink = subm['permalink']
+    comments = getCommentData(sub_id, limit)
+    subData.append((sub_id, title, created, url, author, score, numComms, permalink, flair, comments))
+    subStats[sub_id] = subData
 
 
+
+
+
+
+
+
+
+# class
 class Ui_RedditDownloader(object):
     def setupUi(self, RedditDownloader):
         # if subreddit exists
@@ -165,11 +198,10 @@ class Ui_RedditDownloader(object):
 
     def commencedownload(self):
         warning = ""
-        name = self.SubredditName.text()
-        commentcount = self.CommentCountBox.text()
-        print(commentcount)
-        if not sub_exists(name):
-            warning += name + " is not a valid subreddit"
+        sub = self.SubredditName.text()
+        cc = self.commentcount.text()
+        if not sub_exists(sub):
+            warning += sub + " is not a valid subreddit"
             self.WarningLabel.setText(warning)
             self.WarningLabel.hide()
             self.WarningLabel.show()
@@ -189,7 +221,6 @@ class Ui_RedditDownloader(object):
 
             ## check if start < end
             if start >= end:
-                print("your start date should be before your end date!")
                 self.WarningLabel.setText("your start date should be before your end date!")
                 self.WarningLabel.hide()
                 self.WarningLabel.show()
@@ -197,6 +228,62 @@ class Ui_RedditDownloader(object):
                 self.WarningLabel.setText("")
                 self.WarningLabel.hide()
                 self.WarningLabel.show()
+            #  comment count is cc, subreddit name is name, start is start and end is end
+            temp = self.URLBox.isChecked()
+            print(temp)
+            headers = [ "URL", "Comments", "Author", "Permalink", "Comment Count", "Score", "Flair"]
+            checked = []
+            checked.append(self.URLBox.isChecked())
+            checked.append(self.CommentBox.isChecked())
+            checked.append(self.AuthorBox.isChecked())
+            checked.append(self.PermalinkBox.isChecked())
+            checked.append(self.CommentCountBox.isChecked())
+            checked.append(self.ScoreBox.isChecked())
+            checked.append(self.FlairBox.isChecked())
+            contains = []
+            for h in range(len(headers)):
+                print(str(headers[h]) + " has the status" + str(checked[h]))
+                if checked[h]:
+                    contains.append(headers[h])
+
+            self.results.append("commencing download between" +time.ctime(int(start)) + " and " + time.ctime(int(end)))
+            self.results.append("the download will contain all " + str(contains))
+            self.results.hide()
+            self.results.show()
+            before = end
+            after = start
+            query = ""
+            subCount = 0
+            subStats = {}
+            try:
+
+                data = getPushshiftData(query, after, before, sub)
+                # Will run until all posts have been gathered
+                # from the 'after' date up until before date
+                while len(data) > 0:
+                    for submission in data:
+                        collectSubData(submission, cc)
+                        subCount += 1
+                        print("Post Number " + str(subCount) + " has been downloaded.")
+                    # Calls getPushshiftData() with the created date of the last submission
+                    print(len(data))
+                    print(str(datetime.datetime.fromtimestamp(data[-1]['created_utc'])))
+                    after = data[-1]['created_utc']
+                    data = getPushshiftData(query, after, before, sub)
+            except:
+                print("oops, the download has accidentally failed at " + str(
+                    datetime.datetime.fromtimestamp(data[-1]['created_utc'])))
+                print("The downloads so far will be saved , please restart the application at " + str(
+                    data[-1]['created_utc']))
+
+
+
+
+
+
+
+
+
 
 
 
