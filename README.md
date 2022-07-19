@@ -4,7 +4,7 @@ A simple CLI tool to download reddit text posts and comments.
 By default, reddit's API has a 1000 post cap on downloads. To get around this I wrote a simple script that queries [PushShift](https://pushshift.io/)  to download as many posts as wanted from a subreddit, between a specified time frame. 
 
 ### Prerequisites
-For this to work, you will need to have [Python 3+](https://www.python.org/download/releases/3.0/), [PRAW](https://pypi.org/project/praw/) (The Python Reddit API Wrapper) and [prawcore](https://pypi.org/project/prawcore/) (a communication layer used by PRAW) downloaded.These can be downloaded individually using [PIP](https://pypi.org/).
+For this to work, you will need to have [Python 3+](https://www.python.org/download/releases/3.0/), [PRAW](https://pypi.org/project/praw/) (The Python Reddit API Wrapper) and [prawcore](https://pypi.org/project/prawcore/) (a communication layer used by PRAW) downloaded. These can be downloaded individually using [PIP](https://pypi.org/).
 
 If you have PIP already downloaded, you can use the simple command:
 ```shell script
